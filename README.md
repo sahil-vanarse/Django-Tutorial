@@ -9,3 +9,4 @@ In this Django Tutorial, I have done the important topic's of the Django which a
 5) Actiavte a Virtual Environment - cd env\Scripts\activate
 6) Creating a new django app - python manage.py startapp app-name
 7) Run the app - python manage.py runserver
+8) If you want to run the app on different server - python manage.py runserver 0.0.0.0:5000
