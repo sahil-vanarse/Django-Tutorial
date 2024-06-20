@@ -6,4 +6,7 @@ In this Django Tutorial, I have done the important topic's of the Django which a
 2) Download Virtual Environment - https://pypi.org/project/virtualenv/
 3) Download Django package on the command Prompt - pip install django
 4) Create a Virtual Environment - virtualenv env
-5) Actiavte a Virtual Environment - cd env\Scripts\activate 
+5) Actiavte a Virtual Environment - cd env\Scripts\activate
+6) Creating a new django app - python manage.py startapp app-name
+7) Run the app - python manage.py runserver
+8) If you want to run the app on different server - python manage.py runserver 0.0.0.0:5000
