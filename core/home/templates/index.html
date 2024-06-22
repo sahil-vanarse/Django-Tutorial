@@ -1,13 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    {% extends "base.html" %}
+    
+    {% block start %}
+    
+    
+    <a href = "/contact"> Contact </a>
+    <a href = "/about"> About </a>
+
+
+    <p><table>
+        <tr>
+        <th>Sr. No</th>
+          <th>Name</th>
+          <th>age</th>
+          <th>Can Vote</th>
+        </tr>
+        {% for p in people %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{p.name}}</td>
+          <td>{{p.age}}</td>
+          <td>
+            {% if p.age > 17 %}
+                👍
+            {% else %}
+            👎
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </table></p>
+
+      <p>{{text|truncatechars:7}}</p>
+
+      <p>
+        {% if 'tomato' in vegetables %}
+        <p> Yes tomato is there in the vegetable array</p>
+        {% else %}
+        <p> tomato is not there in the vegetable array</p>
+        {% endif %}
+      </p>
+
     <p>jwgierigierhgihofwefierighervberoieghqegvqwekjfbwekjvj erkjvgkerbvwlekfbiugiuebfw'oeifg3eicv eirvfvhweuvfqeiurbvdkjcvqe,vkbefjhd dvkerbvrgjwdvewihwgfewcvqke;rbgv ejrhf qwejfvkwrkbgbewrifvwc;efwerged c dwkjcvuwqerbgkvwhjdvwefer
     </p>
 
-</body>
-</html>
+    {% endblock %}
+
