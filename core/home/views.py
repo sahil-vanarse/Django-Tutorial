@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render # type: ignore
 from django.http import HttpResponse
 
 def home(request):
