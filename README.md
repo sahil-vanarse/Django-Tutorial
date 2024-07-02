@@ -15,10 +15,11 @@ In this Django Tutorial, I have done the important topic's of the Django which a
 # Topic : Views and urls :
 In a Django project, there can be multiple apps, such as payment, about, and home. Each app is created to handle specific features or functionality. Within each app, we define views to process requests and render responses. The URL routing for each app is managed in its own urls.py file, where we map URL patterns to their corresponding views. Finally, we include these app-specific URL patterns in the main project's urls.py file to bind them to the overall application.
 
-# Topic : Template engine:
+# Topic : Template engine and Template Inheritance:
 Django has powerfull tool i.e template engine. Template Engine means we can use looping, conditional statement etc as like we do in python. it has its own syntax. For more information go through : 
  https://docs.djangoproject.com/en/5.0/ref/templates/language/#
 
+Template inheritance in Django allows you to create a base template with common elements like header and footer, and then define placeholders for content that will change. Other templates can inherit from this base and override the placeholders with specific content, reducing code duplication and making maintenance easier.
 
 # Important Topic : Models and Migration :
 In the models file we write the class which has the attributes of the class we have created for eg. If we create a class as Student and its attributes are name, age, email, address etc and when we make the changes in it we need to write the command as "python manage.py makemigrations" and again we need to write the command "python manage.py migrate" this make the changes. 
