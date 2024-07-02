@@ -38,3 +38,7 @@ The python manage.py migrate command is then used to apply those migrations to t
 Django keeps track of the applied migrations in a special table named django_migrations. This table records the migration files that have been applied to the database. When you run makemigrations, Django compares your current models with the ones stored in the last migration to determine what has changed. When you run migrate, Django compares the migrations files that have not been applied to the database with the records in the django_migrations table to determine which migrations need to be executed.
 
 In summary, Django knows what changes have been made to your models by comparing the current state of your models with the historical information stored in migration files and the django_migrations table. This system allows Django to maintain the integrity of your database schema as you develop your application.
+
+Commands :
+For making migrations : python manage.py makemigrations
+For migrating = python manage.py migrate
