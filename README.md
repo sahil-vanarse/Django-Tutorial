@@ -42,3 +42,7 @@ In summary, Django knows what changes have been made to your models by comparing
 Commands :
 For making migrations : python manage.py makemigrations
 For migrating = python manage.py migrate
+
+
+# Topic : Shell :
+
