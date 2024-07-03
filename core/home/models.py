@@ -11,6 +11,6 @@ class Student(models.Model):
     age = models.IntegerField() # if blank means he can put any else none will be added. We can add default parameter in it so that we can set default age if the used dont add it
     email = models.EmailField(null=True, blank=True) # for the email 
     address = models.TextField(null=True, blank=True) # for the address
-    image = models.ImageField() # for the image
-    file = models.FileField() # for the any other file
+    # image = models.ImageField() # for the image
+    # file = models.FileField() # for the any other file
 
