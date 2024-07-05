@@ -14,3 +14,10 @@ class Student(models.Model):
     # image = models.ImageField() # for the image
     # file = models.FileField() # for the any other file
 
+class Car(models.Model):
+    car_name = models.CharField(max_length=50)
+    speed = models.IntegerField(default = 50)
+
+    def __str__(self):
+        return self.car_name
+
