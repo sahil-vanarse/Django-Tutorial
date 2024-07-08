@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block start %}
+
+<div class="container mt-5">
+    <form class="col-6 mx-auto card p-4 shadow-lg" method="post" enctype="multipart/form-data" >
+        {% csrf_token %}  
+        {% comment %} inserts a CSRF token into forms in Django templates to protect against CSRF attacks by verifying the authenticity of form submissions. Cross-Site Request Forgery. It gives new token whenever we reload the page {% endcomment %}
+        <center><h2>Add Receipe</h2></center>
+        <hr>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Receipe Name</label>
+          <input type="text" class="form-control" name="receipe_name" placeholder="Receipe name" required>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Receipe Description</label>
+            <textarea class="form-control" name="receipe_description" style="resize:None" placeholder="Enter the description" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Receipe Image</label>
+            <input type="file" class="form-control" name="receipe_image" placeholder="Receipe Image" required>
+        </div>
+
+        <button type="submit" class="btn btn-success" style="margin-top:10px">Add Receipe</button>
+      </form>
+</div>
+
+{% endblock %}
