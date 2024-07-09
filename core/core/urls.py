@@ -18,13 +18,24 @@ from django.contrib import admin  # type: ignore
 from django.urls import path   # type: ignore
 from home.views import *
 from vege.views import *
+from django.conf import settings # type: ignore
+from django.conf.urls.static import static # type: ignore
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns  # type: ignore
 
 
 urlpatterns = [
     path('', home, name = "home"),
     path('receipes/', receipes, name = "receipes"),
+    path('delete_receipe/<int:id>/', delete_receipe, name='delete_receipe'),
+    path('update_receipe/<int:id>/', update_receipe, name="update_receipe"),
     path('success_page/', success_page, name = "success_page"),
     path('contact/', contact, name = "contact"),
     path('about/', about, name = "about"),
     path('admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
+urlpatterns += staticfiles_urlpatterns()

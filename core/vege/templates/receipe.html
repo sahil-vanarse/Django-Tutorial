@@ -24,4 +24,61 @@
       </form>
 </div>
 
+
+{% comment %} <div class="container mt-5">
+    <form class="col-6 mx-auto card p-4 shadow-lg" method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
+        
+    </form>
+
+</div> {% endcomment %}
+
+  
+
+{% comment %} {{receipe}} {% endcomment %}
+<div class="container mt-5">
+    <div class="mt-5">
+        <div class="mx-auto col-6">
+            <div class="mb-3">
+                <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Search Receipe</label>
+                    <input type="search" class="form-control" name="search_receipe" placeholder="Receipe name">
+                  </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            <div>
+        </div>
+    </div>
+<table class="table table-hover mt-5">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Receipe Id</th>
+        <th scope="col">Receipe Name</th>
+        <th scope="col">Receipe Description</th>
+        <th scope="col">Receipe Image</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for receipe in receipes %}
+      <tr>       
+        <th scope="row">{{ forloop.counter }}</th>
+        <th scope="row">{{receipe.id}}</th>
+        <td>{{receipe.receipe_name}}</td>
+        <td>{{receipe.receipe_description|slice:":35"}}</td>
+        <td>
+            <img src="/media/{{ receipe.receipe_image }}" style="height:50px; width:50px" >
+        </td>  
+        <td>
+            <a href="/delete_receipe/{{receipe.id}}/" class="btn btn-danger">Delete</a>
+            <a href="/update_receipe/{{receipe.id}}/" class="btn btn-warning">Update</a>
+        </td>      
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
 {% endblock %}
