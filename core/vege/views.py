@@ -1,6 +1,8 @@
 from django.shortcuts import *  # type: ignore
 from django.http import * #type: ignore
 from vege.models import *
+from django.contrib.auth.models import User #type: ignore
+from django.contrib import messages #type: ignore
 # Create your views here.
 def receipes(request):
     if request.method == "POST":
@@ -60,3 +62,36 @@ def update_receipe(request, id):
 
 
     return render(request, "update_receipe.html", context)
+
+
+def login_page(request):
+    return render(request, 'login.html')
+
+def register_page(request):
+    if request.method == "POST":
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # the user is default model in the django which contains name, username and password
+
+        userexist = User.objects.filter(username = username)
+        if userexist.exists():
+            messages.info(request, 'Username already exists')
+            return redirect('/register/')
+        
+
+        user = User.objects.create(
+            first_name = first_name,
+            last_name = last_name,
+            username = username
+        )
+
+        # to encrypt the password the django has the method
+        user.set_password(password)
+        user.save()
+        messages.info(request, 'Account created successfully')
+        return redirect('/register/')
+    return render(request, 'register.html')
+
