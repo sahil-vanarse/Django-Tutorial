@@ -30,6 +30,7 @@ urlpatterns = [
     path('update_receipe/<int:id>/', update_receipe, name="update_receipe"),
     path('login/', login_page, name="login"),
     path('register/', register_page, name="register"),
+    path('logout/', logout_page, name="logout"),
     path('success_page/', success_page, name = "success_page"),
     path('contact/', contact, name = "contact"),
     path('about/', about, name = "about"),

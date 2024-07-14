@@ -1,9 +1,14 @@
-from django.shortcuts import *  # type: ignore
-from django.http import * #type: ignore
+from django.shortcuts import *
+from django.http import *
 from vege.models import *
-from django.contrib.auth.models import User #type: ignore
-from django.contrib import messages #type: ignore
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
+
 # Create your views here.
+@login_required(login_url='/login/')
 def receipes(request):
     if request.method == "POST":
         data = request.POST
@@ -11,38 +16,33 @@ def receipes(request):
         receipeDes = data.get('receipe_description')
         receipeImage = request.FILES.get('receipe_image')
         
-        # Receipe.objects.create(receipe_name = receipeName,
-        #                         receipe_description = receipeDes, 
-        #                         receipe_image = receipeImage
-        #                         )
         receipe = Receipe(
-            receipe_name = receipeName,
-            receipe_description = receipeDes, 
-            receipe_image = receipeImage
+            receipe_name=receipeName,
+            receipe_description=receipeDes,
+            receipe_image=receipeImage
         )
         receipe.save()
         
-        # after the data is saved we need to refresh the page so we need to do this
         return redirect('/receipes')
     
     querySet = Receipe.objects.all()
 
-        
     if request.GET.get('search_receipe'):
-        querySet = querySet.filter(receipe_name__icontains = request.GET.get('search_receipe')
-                                   )
+        querySet = querySet.filter(receipe_name__icontains=request.GET.get('search_receipe'))
 
-    context = {'receipes' : querySet}
+    context = {'receipes': querySet}
         
     return render(request, "receipe.html", context)
 
+@login_required(login_url='/login/')
 def delete_receipe(request, id):
-    querySet = Receipe.objects.get(id = id)
+    querySet = Receipe.objects.get(id=id)
     querySet.delete()
     return redirect('/receipes')
 
+@login_required(login_url='/login/')
 def update_receipe(request, id):
-    querySet = Receipe.objects.get(id = id)
+    querySet = Receipe.objects.get(id=id)
     if request.method == "POST":
         updated_receipe_name = request.POST.get('receipe_name')
         updated_receipe_description = request.POST.get('receipe_description')
@@ -57,14 +57,32 @@ def update_receipe(request, id):
         querySet.save()
         return redirect('/receipes')
 
-
-    context = {'receipe' : querySet}
-
-
+    context = {'receipe': querySet}
     return render(request, "update_receipe.html", context)
 
-
 def login_page(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Debugging statements
+        print(f"Trying to authenticate user: {username}")
+
+        if not User.objects.filter(username=username).exists():
+            messages.error(request, 'Invalid username')
+            print(f"User {username} does not exist")
+            return redirect('/login/')
+
+        user = authenticate(username=username, password=password)
+
+        if user is None:
+            messages.error(request, 'Invalid Credentials')
+            print(f"Authentication failed for user: {username}")
+            return redirect('/login/')
+        else:
+            login(request, user)
+            print(f"User {username} authenticated successfully")
+            return redirect('/receipes/')
     return render(request, 'login.html')
 
 def register_page(request):
@@ -74,24 +92,25 @@ def register_page(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # the user is default model in the django which contains name, username and password
-
-        userexist = User.objects.filter(username = username)
+        userexist = User.objects.filter(username=username)
         if userexist.exists():
             messages.info(request, 'Username already exists')
             return redirect('/register/')
-        
 
         user = User.objects.create(
-            first_name = first_name,
-            last_name = last_name,
-            username = username
+            first_name=first_name,
+            last_name=last_name,
+            username=username
         )
 
-        # to encrypt the password the django has the method
         user.set_password(password)
         user.save()
         messages.info(request, 'Account created successfully')
         return redirect('/register/')
     return render(request, 'register.html')
 
+
+@login_required(login_url='/login/')
+def logout_page(request):
+    logout(request)
+    return redirect('/login/')
