@@ -1,0 +1,132 @@
+# Basic Setup
+# Run the Django shell
+# python manage.py shell
+
+# for more : https://docs.djangoproject.com/en/5.0/ref/models/querysets/
+
+# Import Model
+from myapp.models import Department
+
+# Querying Data
+
+# Retrieve All Objects
+departments = Department.objects.all()
+
+# Filter Objects
+filtered_departments = Department.objects.filter(department='HR')
+
+# Exclude Objects
+excluded_departments = Department.objects.exclude(department='Finance')
+
+# Get a Single Object
+hr_department = Department.objects.get(department='HR')
+
+# Field Lookups
+departments_starting_with_h = Department.objects.filter(department__startswith='H')
+departments_starting_with_h = Department.objects.filter(department__endswith='H')
+departments_starting_with_h = Department.objects.filter(department__icontains='H')
+departments_starting_with_h[0].pk  # gives the id which is inbuilt in django
+departments_starting_with_h[0].department.department_established  # targets the first object the goes to its attribute and if that attribute is primary key then we can use the '.' to go to that foreignkey object
+
+# Creating and Updating Data
+
+# Creating a New Object
+new_department = Department(department='Marketing')
+new_department.save()
+
+# Or using create
+new_department = Department.objects.create(department='Marketing')
+
+# Updating an Existing Object
+hr_department = Department.objects.get(department='HR')
+hr_department.department = 'Human Resources'
+hr_department.save()
+
+# Or using update
+Department.objects.filter(department='HR').update(department='Human Resources')
+
+# Deleting Data
+
+# Deleting an Object
+hr_department = Department.objects.get(department='Human Resources')
+hr_department.delete()
+
+# Or using delete on a QuerySet
+Department.objects.filter(department='Human Resources').delete()
+
+# Aggregation and Annotation
+
+# Counting Objects
+department_count = Department.objects.count()
+
+# Aggregating Values
+from django.db.models import Count
+department_count = Department.objects.aggregate(Count('id'))
+
+# Annotating Values
+department_with_employee_count = Department.objects.annotate(employee_count=Count('employee'))
+
+# Ordering Data
+
+# Ordering Objects
+ordered_departments = Department.objects.order_by('department')
+ordered_departments_desc = Department.objects.order_by('-department')
+
+# Advanced QuerySet Methods
+
+# Distinct
+distinct_departments = Department.objects.distinct()
+
+# Values
+department_names = Department.objects.values('department')
+
+# Values List
+department_names_list = Department.objects.values_list('department', flat=True)
+
+# Using Q Objects for Complex Queries
+from django.db.models import Q
+complex_query = Department.objects.filter(Q(department='HR') | Q(department='Finance'))
+
+# querywithinQuery
+thisStudents = ['Computer Engineering', 'Mechanical Engineering']
+querySet = Student.objects.filter(department__department__in = thisStudents)
+querySet
+<QuerySet [<Student: Curtis Pena>, <Student: Janet Johnston>, <Student: Jonathan Ramirez>, <Student: Kimberly Brown>, <Student: Mary Welch>, <Student: Michael Sandoval>, <Student: Robert Little>, <Student: Ronald Dyer>, <Student: Sahil Vanarse>, <Student: Sarah Hess>, <Student: Thomas Thompson>]>
+
+
+# To check the value is present or not
+>>> querySet = Student.objects.filter(student_name = "Sahil Vanarse")
+>>> querySet.exists()
+
+
+# To get the dictionary of the values 
+querySet.values()
+
+# to get the latest data 
+querySet.reverse()
+
+# to get the list of specify Values
+ querySet = Student.objects.values_list('student_name', 'student_email')
+
+
+# aggregate and annotate:
+
+Student.objects.aggregate(Avg('student_age'))
+{'student_age__avg': 25.476190476190474}
+
+>>> Student.objects.aggregate(Max('student_age'))
+{'student_age__max': 30}
+
+>>> Student.objects.aggregate(Min('student_age'))
+{'student_age__min': 20}
+
+>>> Student.objects.aggregate(Sum('student_age'))
+{'student_age__sum': 535}
+
+>>> student = Student.objects.values('student_age').annotate(Count('student_age'))
+>>> student
+
+>>> student = Student.objects.values('department__department').annotate(Count('department'))
+>>> student
+<QuerySet [{'department__department': 'Aeronautical Engineering', 'department__count': 6}, {'department__department': 'Civil Engineering', 'department__count': 4}, {'department__department': 'Computer Engineering', 'department__count': 6}, {'department__department': 'Mechanical Engineering', 'department__count': 5}]>
+>>>
