@@ -117,7 +117,7 @@ def logout_page(request):
     return redirect('/login/')
 
 
-from django.db.models import Q # type: ignore
+from django.db.models import Q, Sum # type: ignore
 
 def get_student(request):
     querySet = Student.objects.all()
@@ -126,7 +126,10 @@ def get_student(request):
         search = request.GET.get('search')
         querySet = querySet.filter(
             Q(student_name__icontains = search) |
-            Q(department__department__icontains = search) 
+            Q(department__department__icontains = search) |
+            Q(student_id__student_id__icontains = search) |
+            Q(student_email__icontains = search) |
+            Q(student_age__icontains = search)
                     )
         
 
@@ -136,3 +139,13 @@ def get_student(request):
     page_obj = paginator.get_page(page_number)
     print(page_obj)
     return render(request, 'report/student.html', {'querySet' : page_obj})
+
+
+def see_marks(request, student_id):
+    queryset = StudentsMarks.objects.filter(student__student_id__student_id=student_id)
+    # print(queryset)
+    totalMarks = queryset.aggregate(studentTotalMarks = Sum('marks'))
+    print(totalMarks)
+    return render(request, 'report/see_marks.html', {'queryset': queryset, 'totalMarks' : totalMarks})
+
+
