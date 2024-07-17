@@ -35,6 +35,8 @@ urlpatterns = [
     path('contact/', contact, name = "contact"),
     path('about/', about, name = "about"),
     path('admin/', admin.site.urls),
+
+    path('students/', get_student, name = 'students')
 ]
 
 if settings.DEBUG:

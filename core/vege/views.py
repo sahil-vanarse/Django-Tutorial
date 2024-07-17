@@ -1,10 +1,11 @@
-from django.shortcuts import *
-from django.http import *
-from vege.models import *
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import * #type: ignore
+from django.http import * #type: ignore
+from vege.models import * #type: ignore
+from django.contrib.auth.models import User #type: ignore
+from django.contrib import messages #type: ignore
+from django.contrib.auth import authenticate, login, logout #type: ignore
+from django.contrib.auth.decorators import login_required #type: ignore
+from django.core.paginator import Paginator #type: ignore
 
 
 # Create your views here.
@@ -114,3 +115,24 @@ def register_page(request):
 def logout_page(request):
     logout(request)
     return redirect('/login/')
+
+
+from django.db.models import Q # type: ignore
+
+def get_student(request):
+    querySet = Student.objects.all()
+
+    if request.GET.get('search'):
+        search = request.GET.get('search')
+        querySet = querySet.filter(
+            Q(student_name__icontains = search) |
+            Q(department__department__icontains = search) 
+                    )
+        
+
+    paginator = Paginator(querySet, 6)  # Show 6 query per page.
+
+    page_number = request.GET.get("page", 1)  # this shows from which page to start with 
+    page_obj = paginator.get_page(page_number)
+    print(page_obj)
+    return render(request, 'report/student.html', {'querySet' : page_obj})
