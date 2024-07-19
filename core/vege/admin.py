@@ -1,6 +1,6 @@
-from django.contrib import admin
+from django.contrib import admin #type: ignore
 from .models import Receipe, StudentId, Student, Department, Subject, StudentsMarks, ReportCard
-from django.db.models import *
+from django.db.models import * #type: ignore
 
 #username : sahil-vanarse-tutorial
 #password : S#@5ahil1P

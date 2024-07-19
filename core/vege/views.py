@@ -87,7 +87,7 @@ def login_page(request):
             return redirect('/receipes/')
     return render(request, 'login.html')
 
-def register_page(request):
+def register_page(request):  # sourcery skip: last-if-guard
     if request.method == "POST":
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')

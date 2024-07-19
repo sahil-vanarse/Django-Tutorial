@@ -1,7 +1,7 @@
-from faker import Faker
+from faker import Faker #type: ignore
 import random
 from .models import Department, Student, StudentId, Receipe, Subject, StudentsMarks, ReportCard
-from django.db.models import Sum
+from django.db.models import Sum #type: ignore
 from datetime import datetime
 
 fake = Faker()
