@@ -2,8 +2,9 @@
 {% block start %}
 
 <div class="container mt-5">
-    <h2>Rank : </h2>
+    <h2>Rank : {{queryset.first.student.studentreportcard.first.student_rank}}</h2>
     <h2>Total Marks : {{totalMarks.studentTotalMarks}}</h2>
+    <h2>Date of Result : {{queryset.first.student.studentreportcard.first.date_of_report_card_generation}}</h2>
     <table class="table striped">
         <tbody>
             {% for marks in queryset %}

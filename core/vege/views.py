@@ -6,6 +6,7 @@ from django.contrib import messages #type: ignore
 from django.contrib.auth import authenticate, login, logout #type: ignore
 from django.contrib.auth.decorators import login_required #type: ignore
 from django.core.paginator import Paginator #type: ignore
+from .seed import *
 
 
 # Create your views here.
@@ -142,10 +143,10 @@ def get_student(request):
 
 
 def see_marks(request, student_id):
+    generate_report_card()
     queryset = StudentsMarks.objects.filter(student__student_id__student_id=student_id)
     # print(queryset)
     totalMarks = queryset.aggregate(studentTotalMarks = Sum('marks'))
-    print(totalMarks)
     return render(request, 'report/see_marks.html', {'queryset': queryset, 'totalMarks' : totalMarks})
 
 
