@@ -7,6 +7,9 @@ from django.contrib.auth import authenticate, login, logout #type: ignore
 from django.contrib.auth.decorators import login_required #type: ignore
 from django.core.paginator import Paginator #type: ignore
 from .seed import *
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 # Create your views here.
