@@ -46,8 +46,8 @@ def delete_receipe(request, id):
     return redirect('/receipes')
 
 @login_required(login_url='/login/')
-def update_receipe(request, id):
-    querySet = Receipe.objects.get(id=id)
+def update_receipe(request, slug):
+    querySet = Receipe.objects.get(slug=slug)
     if request.method == "POST":
         updated_receipe_name = request.POST.get('receipe_name')
         updated_receipe_description = request.POST.get('receipe_description')
