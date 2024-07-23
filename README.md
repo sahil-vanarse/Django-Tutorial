@@ -45,4 +45,5 @@ For migrating = python manage.py migrate
 
 
 # Topic : Shell :
+Django's shell is a command-line tool that offers an interactive Python interpreter within the Django project environment. It allows developers to execute Python code, interact with the database using Django's ORM, and test Django-specific functionality outside of the web server context. To access it, simply run python manage.py shell from your project's root directory.
 
