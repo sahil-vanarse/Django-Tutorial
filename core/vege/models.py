@@ -6,6 +6,11 @@ from .utils import generate_slug
 User = get_user_model()
 
 
+# we need not need to make the changes in the all the code if the data is deleted we just need to write the model manager so that the process handels itself
+class StudentManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_deleted = False)
+
 # Create your models here.
 class Receipe(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
@@ -41,6 +46,12 @@ class Student(models.Model):
     student_email = models.EmailField(unique = True)
     student_age = models.IntegerField(default=18)
     student_address = models.TextField()
+
+        # suppose we have ton of data an we deleted thousands of data from it then the field we will make as True for this we will make the manager
+    is_deleted = models.BooleanField(default=False)
+
+    objects = StudentManager()  # custome manager
+    admin_objects = models.Manager()  # built in manager
 
     def __str__(self):
         return self.student_name

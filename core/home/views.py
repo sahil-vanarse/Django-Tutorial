@@ -1,7 +1,9 @@
 from django.shortcuts import render # type: ignore
 from django.http import HttpResponse # type: ignore
+from vege.seed import *
 
 def home(request):
+    seed_db(100)
     people = [
         {'name' : 'Sahil Vanarse', 'age' : 22},
         {'name' : 'Deepen Vanarse', 'age' : 25},
