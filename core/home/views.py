@@ -1,10 +1,17 @@
 from django.shortcuts import * # type: ignore
 from django.http import HttpResponse # type: ignore
 from vege.seed import *
-from .utils import send_email_to_client
+from .utils import send_email_to_client, send_email_with_attachment
+from django.conf import settings
+import os
 
 def send_email(request):
-    send_email_to_client()
+    subject = "This is the email with the attachment"
+    message = "I hope you have clear understanding of the Django Mail now"
+    receipients_list = ['sahilvanarse4@gmail.com', 'sahilvanarse23@gmail.com']
+    file_path = os.path.join(settings.BASE_DIR, 'main.xlsx')
+
+    send_email_with_attachment(subject, message, receipients_list, file_path)
     return redirect('/')
 
 def home(request):

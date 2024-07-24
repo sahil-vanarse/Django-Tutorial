@@ -1,6 +1,6 @@
 from home.models import Student
 import time
-from django.core.mail import send_mail #type: ignore
+from django.core.mail import send_mail, EmailMessage #type: ignore
 from django.conf import settings #type: ignore
 
 sender_email = settings.EMAIL_HOST_USER
@@ -17,3 +17,13 @@ def send_email_to_client():
     from_sender = sender_email
     recipients_list = ["sahilvanarse4@gmail.com"]
     send_mail(subject, message, from_sender, recipients_list)
+
+
+def send_email_with_attachment(subject, message, receipients_list, filepath):
+    mail = EmailMessage(subject=subject,
+                        body=message,
+                        from_email=sender_email ,
+                        to=receipients_list)
+    
+    mail.attach_file(filepath)
+    mail.send()
