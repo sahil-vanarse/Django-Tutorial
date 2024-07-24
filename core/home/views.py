@@ -1,5 +1,6 @@
 from django.shortcuts import * # type: ignore
 from django.http import HttpResponse # type: ignore
+from home.models import Car
 from vege.seed import *
 from .utils import send_email_to_client, send_email_with_attachment
 from django.conf import settings
@@ -15,7 +16,8 @@ def send_email(request):
     return redirect('/')
 
 def home(request):
-    seed_db(100)
+    # seed_db(100)
+    Car.objects.create(car_name = f"Nexon-{random.randint(0, 100)}")
     people = [
         {'name' : 'Sahil Vanarse', 'age' : 22},
         {'name' : 'Deepen Vanarse', 'age' : 25},
